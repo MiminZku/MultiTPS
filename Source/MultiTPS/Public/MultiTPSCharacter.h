@@ -35,6 +35,9 @@ public:
 
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+	// PlayerController 로부터 Possess 됐을 때 호출
+	virtual void PossessedBy(AController* NewController) override;
+
 protected:
 	void InitUiWidget();
 
@@ -106,6 +109,7 @@ public:
 
 	UFUNCTION()
 	void OnRep_ChangeHP();
+
 
 protected:
 	/** Camera boom positioning the camera behind the character */

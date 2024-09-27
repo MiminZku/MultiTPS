@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "Components/HorizontalBox.h"
 #include "MainUI.generated.h"
 
 /**
@@ -16,6 +15,12 @@ class MULTITPS_API UMainUI : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	UMainUI(const FObjectInitializer& ObjectInitializer);
+
+public:
+	virtual void NativeConstruct() override;
+
+public:
 	void ShowCrosshair(bool Enable);
 
 	void AddBulletUI();
@@ -24,7 +29,13 @@ public:
 
 	void PlayDamageAnimation();
 
-	void ShowGameoverUI() { GameoverUI->SetVisibility(ESlateVisibility::Visible); }
+	void ShowGameoverUI();
+
+	UFUNCTION()
+	void OnRetry();
+
+	UFUNCTION()
+	void OnExit();
 
 public:
 	UPROPERTY(BlueprintReadWrite, Category = UI, meta = (BindWidget))
@@ -42,8 +53,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = UI, meta = (BindWidgetAnim), Transient)
 	TObjectPtr<class UWidgetAnimation> DamageAnim;
 
-	UPROPERTY(BlueprintReadWrite, Category = UI, meta = (BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	TObjectPtr<class UHorizontalBox> GameoverUI;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<class UButton> Btn_Retry;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<UButton> Btn_Exit;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = HP)
 	float HP = 1.f;

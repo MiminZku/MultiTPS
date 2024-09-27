@@ -89,6 +89,7 @@ void AMultiTPSCharacter::BeginPlay()
 	mInteractionRange->OnComponentBeginOverlap.AddDynamic(this, &AMultiTPSCharacter::OnInteractionAbled);
 	mInteractionRange->OnComponentEndOverlap.AddDynamic(this, &AMultiTPSCharacter::OnInteractionDisabled);
 
+	// Client에서 Main 캐릭터일 때
 	InitUiWidget();
 }
 
@@ -110,9 +111,16 @@ void AMultiTPSCharacter::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	
 }
 
+void AMultiTPSCharacter::PossessedBy(AController* NewController)
+{
+	PRINTLOG(TEXT("Begin"));
+	Super::PossessedBy(NewController);
+	PRINTLOG(TEXT("End"));
+}
+
 void AMultiTPSCharacter::InitUiWidget()
 {
-	// Player Controller가 없으면 만들지 않음
+	PRINTLOG(TEXT("[%s] Begin"), Controller ? TEXT("Player") : TEXT("No Player"));
 	APlayerController* PlayerController = Cast<APlayerController>(Controller);
 	if (nullptr == PlayerController)	return;
 
